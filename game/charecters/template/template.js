@@ -17,7 +17,7 @@ class TemplateAction extends Action{
     size = 2;
     img = "TemplateAttack.png"
     onCollide(casterChar, collidedChar, colliderId){
-        collidedChar.multiplier += 10;
+        collidedChar.multiplier += 10/collidedChar.resistance;
         this.colliders[colliderId] = undefined;
     }
     cast(caster){
