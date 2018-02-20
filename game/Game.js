@@ -6,6 +6,7 @@ class Game{
         this.players=[];
         this.charecters=[];
         this.owner={};
+        this.reset = reset;
         this._destroyFunc = false;
         this.maxPlayers = maxPlayers;
         this.genBoard();
