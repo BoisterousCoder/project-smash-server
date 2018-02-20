@@ -10,6 +10,7 @@ class Charecter extends Point{
     resistance;
     img;
     playerName;
+    vel;
     speed;
     onMove(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;

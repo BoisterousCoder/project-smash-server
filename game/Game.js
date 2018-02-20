@@ -1,19 +1,13 @@
 class Game{
-    constructor(id, io, actions, reset){
+    constructor(id, io, reset, maxPlayers){
         this.id=id;
         this.name = 'Game ' + (id + 1)
         this.io=io;
         this.players=[];
-        this.board=[];
-        this.baseIds=[];
-        this.actions = actions;
-        this.units=[];
+        this.charecters=[];
         this.owner={};
-        this.turn;
-        this.reset = reset;
-        this.password='';
         this._destroyFunc = false;
-        this.maxPlayers=2;
+        this.maxPlayers = maxPlayers;
         this.genBoard();
     }
     set destroyFunc(func){
@@ -30,6 +24,5 @@ class Game{
                 self._destroyFunc(self.id);
             }
         }
-
     }
 }

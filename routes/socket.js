@@ -2,8 +2,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 const Game = require('../game/Game.js');
-const NUM_OF_GAMES = 3;
+const NUM_OF_PUBS = 3;
 const fs = require('fs');
+const crypto = require('crypto');
 
 let assetsFolder = 'src/assets/'
 let actionNameList = [];
@@ -37,8 +38,8 @@ module.exports = function(io) {
         }
     }
 
-    for(let i = 0; i < NUM_OF_GAMES; i++){
-        publicGames[i] = new Game(i, io, actions, resetGame);
+    for(let i = 0; i < NUM_OF_PUBS; i++){
+        publicGames[i] = new Game(i, io, resetGame, 4);
     }
     let peopleConected = new Wrapper(0, function() {
         console.log('There are now ' + peopleConected.get() + ' people conected.');
@@ -111,10 +112,11 @@ module.exports = function(io) {
             }
         });
         on('requestPrivateGame', function(gameName){
+            gameName = hash(gameName);
             if(gameName){
                 console.log('creating private game ' + gameName);
                 if(!privateGames[gameName]){
-                    privateGames[gameName] = new Game(gameName, io, actions, resetGame);
+                    privateGames[gameName] = new Game(gameName, io, actions, resetGame, 4);
                     privateGames[gameName].name = gameName;
                     socket.emit('confirmPrivateGame', gameName);
                     privateGames[gameName].destroyFunc = deletePrivateGame;
@@ -126,46 +128,6 @@ module.exports = function(io) {
                 socket.emit('alertUser', gameName + 'is not a valid name');
             }
         });
-
-        on('clickedTile', function(res) {
-            console.log('You clicked tile ' + res);
-            game.setTile(res, 'color', 'yellow');
-        }, true);
-        on('getBase', function(res){
-            let baseId = game.baseIds[game.getPlayer(socket.id).id];
-            game.setUnitOwner(baseId, socket.id)
-        }, true);
-        on('getGameData', function(res){
-            console.log('Fetching tiles for game ' + game.id);
-
-            let tileId = 0;
-            for(let tileData of game.board){
-                socket.emit('setTile', JSON.stringify(tileData));
-            };
-            for(let unitData of game.units){
-                socket.emit('setUnit', JSON.stringify(unitData));
-            }
-
-            if(game.turn == socket.id){
-                socket.emit('updateIsPlayersTurn', 'true');
-            }else{
-                socket.emit('updateIsPlayersTurn', 'false');
-            }
-
-            socket.emit('finishBoard');
-        }, true);
-        on('requestAction', function(res){
-            let data = JSON.parse(res);
-            game.doAction(data.target, data.source, data.action, socket.id);
-        }, true);
-        on('endTurn', (res) => {
-            if(game.turn == socket.id){
-                let opposingPlayer = game.getOpposingPlayer(socket.id);
-                game.turn = opposingPlayer.socket.id;
-                opposingPlayer.socket.emit('updateIsPlayersTurn', 'true');
-                socket.emit('updateIsPlayersTurn', 'false');
-            }
-        }, true);
     });
 };
 
@@ -179,4 +141,8 @@ function Wrapper(value, callback) {
     this.get = function() {
         return this.value;
     };
+}
+
+function hash(input){
+    return crypto.createHash('md5').update(input).digest('hex');
 }
