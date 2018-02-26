@@ -11,4 +11,7 @@ class Collider extends Point {
     onUpdate(lastTime, currentTime){
         //To Be filled in by child
     }
+    onCollide(casterChar, collidedChar, colliderId){
+        //TODO
+    }
 }

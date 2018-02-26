@@ -5,15 +5,28 @@ class Action{
     id;
     isActive = false;
     img;
+    __onColide = [];
+    __onUpdate = [];
     cast(caster){
         //To Be filled in by child
     }
-    onCollide(casterChar, collidedChar, colliderId){
-        //To Be filled in by child
+    get onCollide(){
+        let self = this;
+        return function(casterChar, collidedChar, colliderId){
+            for(let func in self.__onUpdate){
+                func(casterChar, collidedChar, colliderId);
+            }
+        }
     }
-    onUpdate(lastTime, currentTime){
-        //To Be filled in by child
+    get onUpdate(){
+        let self = this;
+        return function(lastTime, currentTime){
+            for(let func in self.__onUpdate){
+                func(lastTime, currentTime);
+            }
+        }
     }
+    set onUpdate(lastTime, currentTime)
     translate(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;
         let vect = new Point();

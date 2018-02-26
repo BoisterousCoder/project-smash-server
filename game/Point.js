@@ -8,7 +8,7 @@
     }
     distance(otherPoint) {
         let distance = new Point(this.x - otherPoint.x, this.y - otherPoint.y);
-        return distance;
+        return Math.abs(distance);
     }
     combine(otherPoint){
         let sum = new Point(this.x + otherPoint.x, this.y + otherPoint.y);

@@ -5,6 +5,7 @@ class Game{
         this.io=io;
         this.players=[];
         this.charecters=[];
+
         this.owner={};
         this.reset = reset;
         this._destroyFunc = false;
@@ -25,5 +26,11 @@ class Game{
                 self._destroyFunc(self.id);
             }
         }
+    }
+    onInput(input, charecter){
+        
+    }
+    onUpdate(lastUpdateTime, currentTime){
+        
     }
 }
