@@ -3,14 +3,15 @@ class Game{
         this.id=id;
         this.name = 'Game ' + (id + 1)
         this.io=io;
+        this.gravVect = new Point(0, 0.1);
         this.players=[];
         this.charecters=[];
 
+        this.lastUpdateTime = 
         this.owner={};
         this.reset = reset;
         this._destroyFunc = false;
         this.maxPlayers = maxPlayers;
-        this.genBoard();
     }
     set destroyFunc(func){
         this._destroyFunc = func;
@@ -27,10 +28,19 @@ class Game{
             }
         }
     }
-    onInput(input, charecter){
+    onInput(input, playerId){
         
     }
-    onUpdate(lastUpdateTime, currentTime){
-        
+    onStart(charecters){
+        this.charecters = charecters;
+        this.lastUpdateTime = Date.now();
+        setTimeout(this.onUpdate, 10)
+    }
+    onUpdate(){
+        let currentTime = Date.now();
+        this.charecters.forEach(charecter => {
+            charecter.onUpdate(this.lastUpdateTime, this.currentTime);
+        });
+        this.lastUpdateTime = this.currentTime;
     }
 }
