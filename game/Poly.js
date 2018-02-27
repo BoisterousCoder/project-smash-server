@@ -88,6 +88,32 @@ class Poly extends Point{
             return false;
         }
     }
+    distance(point) {
+        return applyToAllVerts(this, point, "distance");
+    }
+    combine(point) {
+        return applyToAllVerts(this, point, "combine");
+    }
+    roundUp(scale=1){
+        return applyToAllVerts(this, scale, "roundUp");
+    }
+    roundDown(scale=1){
+        return applyToAllVerts(this, scale, "roundDown");
+    }
+    round(scale=1){
+        return applyToAllVerts(this, scale, "round");
+    }
+    subtract(point) {
+        return applyToAllVerts(this, point, "subtract");
+    }
+    scale(scalar) {
+        return new Poly(this, this.size*scalar, this.vertices);
+    }
+}
+
+function applyToAllVerts(poly, argument, methodName){
+    let newCenter = new Point(poly.x, poly.y)[methodName](argument);
+    return new Poly(newCenter, poly.size, poly.__vertices);
 }
 
 //Note: varience is a scale between 0 and 1;

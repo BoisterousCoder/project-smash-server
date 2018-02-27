@@ -1,14 +1,27 @@
+const EMPTINESS_UPDATE_DELAY = 1000;
+/*
+    Matter.js Demo
+    http://brm.io/matter-js/demo/#airFriction
+*/  
+
 class Game{
+    id;
+    name;
+    io;
+    gravVect = new Point(0, 0.1);
+    staticPolys = [];
+    players=[];
+    charecters=[];
+    lastUpdateTime;
+    owner={};
+    reset;
+    _destroyFunc;
+    maxPlayers;
     constructor(id, io, reset, maxPlayers){
         this.id=id;
         this.name = 'Game ' + (id + 1)
         this.io=io;
-        this.gravVect = new Point(0, 0.1);
-        this.players=[];
-        this.charecters=[];
 
-        this.lastUpdateTime = 
-        this.owner={};
         this.reset = reset;
         this._destroyFunc = false;
         this.maxPlayers = maxPlayers;
@@ -31,15 +44,17 @@ class Game{
     onInput(input, playerId){
         
     }
-    onStart(charecters){
+    onStart(charecters, staticPolys){
+        this.staticPolys = staticPolys;
         this.charecters = charecters;
         this.lastUpdateTime = Date.now();
-        setTimeout(this.onUpdate, 10)
+        setTimeout(this.onUpdate, 10);
     }
     onUpdate(){
         let currentTime = Date.now();
+        let game = this;
         this.charecters.forEach(charecter => {
-            charecter.onUpdate(this.lastUpdateTime, this.currentTime);
+            charecter.onUpdate(game, game.lastUpdateTime, game.currentTime);
         });
         this.lastUpdateTime = this.currentTime;
     }

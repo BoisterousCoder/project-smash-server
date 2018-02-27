@@ -32,7 +32,7 @@ class Charecter extends Poly{
     }
     get onUpdate(){
         let self = this;
-        return function(lastTime, currentTime){
+        return function(game, lastTime, currentTime){
             for(let func in self.__onUpdate){
                 func(lastTime, currentTime);
             }

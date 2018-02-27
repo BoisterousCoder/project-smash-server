@@ -7,24 +7,25 @@
         this.y = y;
     }
     distance(otherPoint) {
-        let distance = new Point(this.x - otherPoint.x, this.y - otherPoint.y);
-        return Math.abs(distance);
+        return this.subtract(otherPoint).abs();
+    }
+    subtract(otherPoint) {
+        return new Point(this.x - otherPoint.x, this.y - otherPoint.y);
     }
     combine(otherPoint){
-        let sum = new Point(this.x + otherPoint.x, this.y + otherPoint.y);
-        return sum;
+        return new Point(this.x + otherPoint.x, this.y + otherPoint.y);
     }
     roundUp(scale=1){
-        let roundedNum = new Point(Math.ceil(this.x/scale)*scale, Math.ceil(this.y/scale)*scale);
-        return roundedNum;
+        return new Point(Math.ceil(this.x/scale)*scale, Math.ceil(this.y/scale)*scale);
     }
     roundDown(scale=1){
-        let roundedNum = new Point(Math.floor(this.x/scale)*scale, Math.floor(this.y/scale)*scale);
-        return roundedNum;
+        return new Point(Math.floor(this.x/scale)*scale, Math.floor(this.y/scale)*scale);
     }
     round(scale=1){
-        let roundedNum = new Point(Math.round(this.x/scale)*scale, Math.round(this.y/scale)*scale);
-        return roundedNum;
+        return new Point(Math.round(this.x/scale)*scale, Math.round(this.y/scale)*scale);
+    }
+    abs(){
+        return new Point(Math.abs(this.x), Math.abs(this.y));
     }
     scale(scalar) {
         this.x *= scalar;
