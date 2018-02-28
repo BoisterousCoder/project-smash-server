@@ -1,4 +1,5 @@
 const EMPTINESS_UPDATE_DELAY = 1000;
+const Matter = require("matter-js");
 /*
     Matter.js Demo
     http://brm.io/matter-js/demo/#airFriction
@@ -8,7 +9,8 @@ class Game{
     id;
     name;
     io;
-    gravVect = new Point(0, 0.1);
+    grav = new Point(0, 0.1);
+    engine;
     staticPolys = [];
     players=[];
     charecters=[];
@@ -48,7 +50,15 @@ class Game{
         this.staticPolys = staticPolys;
         this.charecters = charecters;
         this.lastUpdateTime = Date.now();
+
+        this.engine = Matter.Engine.create();
+
+        Engine.run(this.engine);
+
         setTimeout(this.onUpdate, 10);
+    }
+    add(item){
+        Matter.add(this.engine.world, [item]);
     }
     onUpdate(){
         let currentTime = Date.now();

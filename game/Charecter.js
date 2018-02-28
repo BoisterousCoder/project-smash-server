@@ -1,5 +1,5 @@
 let Action = require("./Action");
-let Point = require("./Point")
+let Point = require("./Point");
 
 class Charecter extends Poly{
     socketId;
@@ -17,11 +17,7 @@ class Charecter extends Poly{
     get onMove(){
         let self = this;
         return function(direction, lastTime, currentTime){
-            let distance = (currentTime - lastTime) * speed;
-            let vect = new Point();
-            vect.r = distance;
-            vect.deg = direction;
-            self.combine(vect);
+            __move(direction, lastTime, currentTime)
             for(let func in self.__onMove){
                 func(direction, lastTime, currentTime);
             }
@@ -37,6 +33,13 @@ class Charecter extends Poly{
                 func(lastTime, currentTime);
             }
         }
+    }
+    __move(direction, lastTime, currentTime){
+        let distance = (currentTime - lastTime) * speed;
+        let vect = new Point();
+        vect.r = distance;
+        vect.deg = direction;
+        self.combine(vect);
     }
     set onUpdate(func){
         this.__onUpdate.push(func);
