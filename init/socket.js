@@ -1,6 +1,7 @@
 const handlers = require("./handlers");
 module.exports = function(io) {
     io.on('connection', function(socket) {
+        console.log("user Connect");
         let game;
 
         function on(title, callback, isGameRequired){
@@ -12,12 +13,12 @@ module.exports = function(io) {
                         }else if(!isGameRequired){
                             callback(res);
                         }else{
-                            console.warn('Person accessed game data of a game they weren\'t in that game.')
+                            console.warn('Person accessed game data of a game they weren\'t in.')
                         }
                     }else if(!isGameRequired){
                         callback(res);
                     }else{
-                        console.warn('Person accessed game data of a game they weren\'t in that game.')
+                        console.warn('Person accessed game data of a game they weren\'t in.')
                     }
                 }catch(err){
                     console.error(err);

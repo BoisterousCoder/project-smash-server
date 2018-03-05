@@ -35,15 +35,12 @@ module.exports = class Game{
         this._destroyFunc = func;
         setTimeout(this.destroyIfEmpty(), EMPTINESS_UPDATE_DELAY);
     }
-    destroyIfEmpty(){
-        let self = this;
-        return function(){        
-            if(self.players.length > 0){
-                console.log('Private game ' + self.name + ' will not be destroyed for now, as there are still players inside');
-                setTimeout(self.destroyIfEmpty(), EMPTINESS_UPDATE_DELAY);
-            }else{
-                self._destroyFunc(self.id);
-            }
+    destroyIfEmpty(){      
+        if(this.players.length > 0){
+            console.log('Private game ' + this.name + ' will not be destroyed for now, as there are still players inside');
+            setTimeout(this.destroyIfEmpty(), EMPTINESS_UPDATE_DELAY);
+        }else{
+            this._destroyFunc(this.id);
         }
     }
     __genStatics(){

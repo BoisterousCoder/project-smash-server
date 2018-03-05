@@ -2,16 +2,25 @@ const crypto = require('crypto');
 function hash(input){
     return crypto.createHash('md5').update(input).digest('hex');
 }
-let privateGames = {};
-let publicGames = [];
+class gameContainer{
+    constructor(){
+        this.pregame = pregame;
+        this.postgame = postgame;
+        this.publicGames = [];
+        this.privateGames = {};
+    }
+}
 
 let pregame = {
-    joinGame(game, s){
+    getPublicListings(msg){
+        
+    },
+    joinGame(msg){
         console.log('test');
     }
 }
 let postgame = {
-
+    
 }
 
 module.exports = {pregame, postgame}
