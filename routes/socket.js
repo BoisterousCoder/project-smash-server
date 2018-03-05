@@ -25,6 +25,12 @@ module.exports = function(io) {
     let publicGames = [];
     let privateGames = {};
 
+    function test(){
+        let game = new Game(0, io, resetGame, 4);
+        console.log('built');
+    }
+    test();
+
     function resetGame(oldGame){
         let newGame = new Game(oldGame.id, oldGame.io, oldGame.actions, oldGame.reset)
         delete oldGame;

@@ -1,32 +1,35 @@
 const EMPTINESS_UPDATE_DELAY = 1000;
 const Matter = require("matter-js");
+const Point = require("./../game/Point");
+const fs = require("fs");
 /*
     Matter.js Demo
     http://brm.io/matter-js/demo/#airFriction
 */  
 
-class Game{
-    id;
-    name;
-    io;
-    grav = new Point(0, 0.1);
-    engine;
-    staticPolys = [];
-    players=[];
-    charecters=[];
-    lastUpdateTime;
-    owner={};
-    reset;
-    _destroyFunc;
-    maxPlayers;
-    constructor(id, io, reset, maxPlayers){
-        this.id=id;
-        this.name = 'Game ' + (id + 1)
-        this.io=io;
+module.exports = class Game{
+    constructor(){
+        // id, io, reset, maxPlayers
+        this.grav = new Point(0, 0.1);
+        this.staticPolys = [];
+        this.players=[];
+        this.charecters=[];
+        this.owner={};
+        this.mapFile = "./game/maps/map.json";
+        // this.id=id;
+        // this.name = 'Game ' + (id + 1)
+        // this.io=io;
 
-        this.reset = reset;
+        // this.reset = reset;
         this._destroyFunc = false;
-        this.maxPlayers = maxPlayers;
+        // this.maxPlayers = maxPlayers;
+        this.engine = Matter.Engine.create();
+
+        this.mapOffSet = {
+            x:0,
+            y:0
+        }
+        this.mapSize = 800;
     }
     set destroyFunc(func){
         this._destroyFunc = func;
@@ -43,29 +46,52 @@ class Game{
             }
         }
     }
+    __genStatics(){
+        let statics = [];
+        let mapData = readJSON(this.mapFile);
+        for(let staticData of mapData.statics){
+            for(let parameter in staticData){
+                staticData[parameter] /= 100;
+            }
+            let staticPoly = Matter.Bodies.rectangle(
+                staticData.x*this.mapSize+this.mapOffSet.x, 
+                staticData.y*this.mapSize+this.mapOffSet.y, 
+                staticData.width*this.mapSize, 
+                staticData.height*this.mapSize, 
+                { isStatic: true }
+            );
+            statics.push(staticPoly);
+        }
+        return statics;
+    }
     onInput(input, playerId){
         
     }
-    onStart(charecters, staticPolys){
-        this.staticPolys = staticPolys;
-        this.charecters = charecters;
+    onStart(){
+        console.log('starting..');
+        // charecters
+        // this.charecters = charecters;
         this.lastUpdateTime = Date.now();
+        this.staticPolys = this.__genStatics();
+        for(let staticPoly of this.staticPolys){
+            this.add(staticPoly);
+        }
 
         this.engine = Matter.Engine.create();
+        console.log(this.engine);
 
-        Engine.run(this.engine);
-
-        setTimeout(this.onUpdate, 10);
+        setInterval(()=>onUpdate(this), 10);
     }
     add(item){
-        Matter.add(this.engine.world, [item]);
+        Matter.World.add(this.engine.world, [item]);
     }
-    onUpdate(){
-        let currentTime = Date.now();
-        let game = this;
-        this.charecters.forEach(charecter => {
-            charecter.onUpdate(game, game.lastUpdateTime, game.currentTime);
-        });
-        this.lastUpdateTime = this.currentTime;
-    }
+}
+function onUpdate(game){
+    let currentTime = Date.now();
+    Matter.Engine.update(game.engine, currentTime - game.lastUpdateTime);
+    game.lastUpdateTime = game.currentTime;
+}
+
+function readJSON(filename){
+    return JSON.parse(fs.readFileSync(filename, 'utf8'));
 }
