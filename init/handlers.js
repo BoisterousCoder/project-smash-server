@@ -12,6 +12,9 @@ class gameContainer{
 }
 
 let pregame = {
+    ping(msg){
+        console.log('pong');
+    },
     getPublicListings(msg){
         
     },
