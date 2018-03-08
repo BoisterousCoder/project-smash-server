@@ -1,7 +1,13 @@
 const handlers = require("./handlers");
 module.exports = function(io) {
+    let activeConnections = 0;
+    function printActiveConnections(){
+        console.log('there are '+activeConnections+" conections active");
+    }
+
     io.on('connection', function(socket) {
-        console.log("user Connect");
+        activeConnections += 1;
+        printActiveConnections();
         let game;
 
         function on(title, callback, isGameRequired){
@@ -13,12 +19,12 @@ module.exports = function(io) {
                         }else if(!isGameRequired){
                             callback(res);
                         }else{
-                            console.warn('Person accessed game data of a game they weren\'t in.')
+                            console.warn('Person attempted to access game data of a game they weren\'t in.')
                         }
                     }else if(!isGameRequired){
                         callback(res);
                     }else{
-                        console.warn('Person accessed game data of a game they weren\'t in.')
+                        console.warn('Person attempted to access game data of a game they weren\'t in.')
                     }
                 }catch(err){
                     console.error(err);
@@ -41,5 +47,9 @@ module.exports = function(io) {
                 handlers[handler](res, game, socket, io);
             }, true);
         }
+        on("disconnect", function(){
+            activeConnections -= 1;
+            printActiveConnections();
+        });
     });
 };

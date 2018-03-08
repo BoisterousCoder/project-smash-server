@@ -1,0 +1,27 @@
+html
+    head
+        title Test Connection
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js")
+        script.
+            var socket;
+            window.onload = function(){
+                let connectionOptions =  {
+                    "force new connection" : true,
+                    "reconnectionAttempts": "Infinity", //avoid having user reconnect manually in order to prevent dead clients after a server restart
+                    "timeout" : 10000, //before connect_error and connect_timeout are emitted.
+                    "transports" : ["websocket"], 
+                    "reconnect": true
+                };
+                socket = io.connect("localhost:3000", connectionOptions);
+                setInterval(function(){
+                    if(socket.connected){
+                        document.getElementById("status").textContent = "Online";
+                    }else{
+                        document.getElementById("status").textContent = "Offline";
+                    }
+                }, 100);
+            }
+    body
+        h1 Server Test
+        p Server Status: 
+            span(id="status") false
