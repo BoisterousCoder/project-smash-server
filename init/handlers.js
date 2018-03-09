@@ -12,13 +12,14 @@ class gameContainer{
 }
 
 let pregame = {
-    ping(msg){
+    ping(socket, msg){
         console.log('pong');
+        socket.emit("pong");
     },
-    getPublicListings(msg){
+    getPublicListings(socket, msg){
         
     },
-    joinGame(msg){
+    joinGame(socket, msg){
         console.log('test');
     }
 }

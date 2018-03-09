@@ -39,12 +39,12 @@ module.exports = function(io) {
 
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
-                handlers[handler](res, game, socket, io);
+                handlers.pregame[handler](socket, res);
             });
         }
         for (const handler in handlers.postgame) {
             on(handler, (res) =>{
-                handlers[handler](res, game, socket, io);
+                handlers.postgame[handler](socket, res);
             }, true);
         }
         on("disconnect", function(){

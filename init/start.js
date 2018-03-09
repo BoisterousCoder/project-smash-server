@@ -13,7 +13,7 @@ app.all('/*', function(req, res) {
   res.render('test');
 });
 
-io.set('transports', [ 'websocket' ]);
+//io.set('transports', [ 'websocket' ]);
 require("./socket.js")(io);
 
 http.listen(port, address, function(){
