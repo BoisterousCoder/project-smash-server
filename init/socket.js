@@ -8,11 +8,14 @@ module.exports = function(io) {
     io.on('connection', function(socket) {
         activeConnections += 1;
         printActiveConnections();
-        let game;
+        let gameId;
+        let isPublicGame;
 
         function on(title, callback, isGameRequired){
             socket.on(title, function(res){
                 try{
+                    let game = getGame();
+                    
                     if(game){
                         if(game.isPlayerInGame(socket.id)){
                             callback(res);
@@ -28,7 +31,7 @@ module.exports = function(io) {
                     }
                 }catch(err){
                     console.error(err);
-                    socket.emit('serverError', 'An error has occured server side. This is probably a bug. Please file a bug report on this program\'s github page with the following text:\n\n' + err.stack);
+                    socket.emit('Error', 'An error has occured server side. This is probably a bug. Please file a bug report on this program\'s github page with the following text:\n\n' + err.stack);
                     callOnFunc(title, callback, isGameRequired);
                 }
             });
@@ -36,15 +39,22 @@ module.exports = function(io) {
         function callOnFunc(title, callback, isGameRequired){
             on(title, callback, isGameRequired);
         }
+        function getGame(){
+            if(isPublicGame){
+                return handlers.publicGames[gameId];
+            }else{
+                return handlers.privateGames[gameId];
+            }
+        }
 
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
-                handlers.pregame[handler](socket, res);
+                game, isPublicGame = handlers.pregame[handler](socket, res);
             });
         }
         for (const handler in handlers.postgame) {
             on(handler, (res) =>{
-                handlers.postgame[handler](socket, res);
+                game = handlers.postgame[handler](socket, res, game);
             }, true);
         }
         on("disconnect", function(){

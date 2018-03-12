@@ -8,7 +8,7 @@ const fs = require("fs");
 */  
 
 module.exports = class Game{
-    constructor(){
+    constructor(id, maxPlayers = 4){
         // id, io, reset, maxPlayers
         this.grav = new Point(0, 0.1);
         this.staticPolys = [];
@@ -16,20 +16,18 @@ module.exports = class Game{
         this.charecters=[];
         this.owner={};
         this.mapFile = "./game/maps/map.json";
-        // this.id=id;
-        // this.name = 'Game ' + (id + 1)
-        // this.io=io;
+        this.id=id;
 
         // this.reset = reset;
         this._destroyFunc = false;
-        // this.maxPlayers = maxPlayers;
+        this.maxPlayers = maxPlayers;
         this.engine = Matter.Engine.create();
 
-        this.mapOffSet = {
+        this.__mapOffSet = {
             x:0,
             y:0
         }
-        this.mapSize = 800;
+        this.__mapSize = 800;
     }
     set destroyFunc(func){
         this._destroyFunc = func;
@@ -43,6 +41,16 @@ module.exports = class Game{
             this._destroyFunc(this.id);
         }
     }
+    join(socket){
+        if(this.players.length >= this.maxPlayers){
+            return false;
+        }else{
+            this.players.push({
+                socket:socket
+            });
+            return this;
+        }
+    }
     __genStatics(){
         let statics = [];
         let mapData = readJSON(this.mapFile);
@@ -51,10 +59,10 @@ module.exports = class Game{
                 staticData[parameter] /= 100;
             }
             let staticPoly = Matter.Bodies.rectangle(
-                staticData.x*this.mapSize+this.mapOffSet.x, 
-                staticData.y*this.mapSize+this.mapOffSet.y, 
-                staticData.width*this.mapSize, 
-                staticData.height*this.mapSize, 
+                staticData.x*this.__mapSize+this.__mapOffSet.x, 
+                staticData.y*this.__mapSize+this.__mapOffSet.y, 
+                staticData.width*this.__mapSize, 
+                staticData.height*this.__mapSize, 
                 { isStatic: true }
             );
             statics.push(staticPoly);
