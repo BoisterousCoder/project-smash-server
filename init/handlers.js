@@ -6,22 +6,15 @@ const Game = require("../game/Game");
 function hash(input){
     return crypto.createHash('md5').update(input).digest('hex');
 }
-class GameContainer{
-    constructor(){
-        this.pregame = pregame;
-        this.postgame = postgame;
-        this.publicGames = [];
-        this.privateGames = {};
-    }
-}
-let games = new GameContainer();
 
 let pregame = {
     ping(socket){
         console.log("The Server was pinged");
         socket.emit("pong");
+        return null;
     },
-    getPublicListings(socket){
+    gameListings(socket){
+        console.log("Sending Listings..");
         let gameListings = [];
         games.publicGames.map(game => {
             gameListings.push({
@@ -30,20 +23,22 @@ let pregame = {
                 id:game.id
             });
         });
-        socket.emit("gameListings", JSON.parse(gameListings));
+        socket.emit("gameListings", JSON.stringify(gameListings));
+        return null;
     },
     requestPublic(socket, gameId){
         gameId = Number(gameId);
         if(!games.privateGames[gameId]){
             socket.emit("warn", "There is no public game with that id");
-            return;
+            return null;
         }
         let game = games.privateGames[gameId].join(socket);
         if(game){
             socket.emit("joinSuccess", gameId);
-            return gameId, true;
+            return gameId;
         }else{
             socket.emit("warn", "You can't join a full game");
+            return null;
         }
     },
     requestPrivate(socket, gameId){
@@ -54,19 +49,33 @@ let pregame = {
                 return gameId;
             }else{
                 socket.emit("warn", "You can't join a full game");
+                return null;
             }
         }else if(games.privateGames[gameId]){
             socket.emit("warn", "You can't overright an already existing game");
+            return null;
         }else{
             gameId = hash(socket.id);
-            let game = new Game(gameId, socket.io);
-            games.privateGames[gameId] = game;
-            return gameId, true;
+            games.privateGames[gameId] = new Game(gameId);
+            return gameId;
         }
     }
 }
 let postgame = {
     
 }
+class GameContainer{
+    constructor(){
+        this.pregame = pregame;
+        this.postgame = postgame;
+        this.publicGames = [];
+        this.privateGames = {};
+
+        for(let i = 0; i < publicGames; i++){
+            this.publicGames[i] = new Game(i);
+        }
+    }
+}
+let games = new GameContainer();
 
 module.exports = games;

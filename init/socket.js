@@ -49,15 +49,15 @@ module.exports = function(io) {
 
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
-                game, isPublicGame = handlers.pregame[handler](socket, res);
-            });
+                game = handlers.pregame[handler](socket, res);
+            }, false);
         }
         for (const handler in handlers.postgame) {
             on(handler, (res) =>{
                 game = handlers.postgame[handler](socket, res, game);
             }, true);
         }
-        on("disconnect", function(){
+        on("disconnect", () => {
             activeConnections -= 1;
             printActiveConnections();
         });
