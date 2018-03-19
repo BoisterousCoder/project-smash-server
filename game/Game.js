@@ -48,8 +48,21 @@ module.exports = class Game{
             this.players.push({
                 socket:socket
             });
+            console.log("player has joined game")
             return this;
         }
+    }
+    leave(socketId){
+        if(this.players.length <= this.maxPlayers){
+            return false;
+        }
+        for(let i in this.players){
+            if(this.players[i].socket.id == socketId){
+                this.players.splice(i, 1)
+                return true;
+            }
+        }
+        return false;
     }
     __genStatics(){
         let statics = [];

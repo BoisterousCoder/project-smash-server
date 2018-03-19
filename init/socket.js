@@ -59,6 +59,13 @@ module.exports = function(io) {
         }
         on("disconnect", () => {
             activeConnections -= 1;
+            if(gameId){
+                if(getGame().leave(socket.id)){
+                    console.log("player removed from game "+gameId);
+                }else{
+                    console.error("error removing a player from game "+gameId);
+                }
+            }
             printActiveConnections();
         });
     });
