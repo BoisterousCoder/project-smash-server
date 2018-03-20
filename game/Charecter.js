@@ -1,7 +1,7 @@
 let Action = require("./Action");
 let Point = require("./Point");
 
-class Charecter extends Poly{
+class Charecter extends Point{
     socketId;
     isPremium;
     name;

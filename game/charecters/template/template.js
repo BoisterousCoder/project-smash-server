@@ -7,7 +7,6 @@ class Template extends Charecter{
     actions = [
         new TemplateAction(0)
     ]
-    isPremium = false; //if the charecter requires premium
     resistance = 2;//the charecter's resistance to damage
     speed = 1;//the movement speed of the charecter
     name = "Template";//The name of the charecter

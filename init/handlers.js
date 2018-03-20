@@ -7,6 +7,10 @@ function hash(input){
     return crypto.createHash('md5').update(input).digest('hex');
 }
 
+function stripInvalid(input){
+    return input.replace(/[^A-Za-z0-9]/g, '');
+}
+
 let pregame = {
     ping(socket){
         console.log("The Server was pinged");
@@ -62,7 +66,15 @@ let pregame = {
     }
 }
 let postgame = {
-    
+    requestCharecter(socket, game, charecterName){
+        charecterName = stripInvalid(charecterName);
+        let playerId = game.getPlayerId(socketId);
+        if(game.players[playerId].charecter){
+            socket.emit("error", "You already have a charecter")
+        }else{
+            game.players[playerId].charecter = require(`../game/charecters/${charecterName}/${charecterName}.js`);
+        }
+    }
 }
 class GameContainer{
     constructor(){
@@ -76,6 +88,7 @@ class GameContainer{
         }
     }
 }
+
 let games = new GameContainer();
 
 module.exports = games;

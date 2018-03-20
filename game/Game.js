@@ -2,6 +2,9 @@ const EMPTINESS_UPDATE_DELAY = 1000;
 const Matter = require("matter-js");
 const Point = require("./../game/Point");
 const fs = require("fs");
+
+const updateInterval = 10;
+
 /*
     Matter.js Demo
     http://brm.io/matter-js/demo/#airFriction
@@ -33,6 +36,11 @@ module.exports = class Game{
         this._destroyFunc = func;
         setTimeout(this.destroyIfEmpty(), EMPTINESS_UPDATE_DELAY);
     }
+    getPlayerId(socketId){
+        for(let i in this.players){
+            if(this.players[i].socket.id == socketId) return i;
+        }
+    }
     destroyIfEmpty(){      
         if(this.players.length > 0){
             console.log('Private game ' + this.name + ' will not be destroyed for now, as there are still players inside');
@@ -56,12 +64,7 @@ module.exports = class Game{
         if(this.players.length <= this.maxPlayers){
             return false;
         }
-        for(let i in this.players){
-            if(this.players[i].socket.id == socketId){
-                this.players.splice(i, 1)
-                return true;
-            }
-        }
+        this.players.splice(this.getPlayerId(socketId), 1)
         return false;
     }
     __genStatics(){
@@ -87,8 +90,6 @@ module.exports = class Game{
     }
     onStart(){
         console.log('starting..');
-        // charecters
-        // this.charecters = charecters;
         this.lastUpdateTime = Date.now();
         this.staticPolys = this.__genStatics();
         for(let staticPoly of this.staticPolys){
@@ -98,7 +99,7 @@ module.exports = class Game{
         this.engine = Matter.Engine.create();
         console.log(this.engine);
 
-        setInterval(()=>onUpdate(this), 10);
+        setInterval(()=>onUpdate(this), updateInterval);
     }
     add(item){
         Matter.World.add(this.engine.world, [item]);

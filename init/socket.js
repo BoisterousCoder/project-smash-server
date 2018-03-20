@@ -54,7 +54,7 @@ module.exports = function(io) {
         }
         for (const handler in handlers.postgame) {
             on(handler, (res) =>{
-                game = handlers.postgame[handler](socket, res, game);
+                game = handlers.postgame[handler](socket, game, res);
             }, true);
         }
         on("disconnect", () => {
