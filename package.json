@@ -2,6 +2,12 @@
   "name": "project-smash",
   "version": "0.0.0",
   "private": true,
+  "license" : "MPL-2.0",
+  "engines" : { 
+    "node" : ">=8.10.0",
+    "npm" : ">=5.5.1"
+  },
+  "repository": "github:BoisterousCoder/project-smash-server",
   "scripts": {
     "start": "node ./init/start.js"
   },
