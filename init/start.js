@@ -1,5 +1,5 @@
 const port = normalizePort(process.env.PORT || '3000');
-const address = 'localhost';
+const address = 'project-smash.azurewebsites.net';
 
 const app = require('express')();
 const http = require('http').Server(app);
