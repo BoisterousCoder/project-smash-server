@@ -1,4 +1,4 @@
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '80');
 const address = 'project-smash.azurewebsites.net';
 
 const app = require('express')();
