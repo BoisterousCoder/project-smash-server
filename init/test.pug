@@ -15,7 +15,7 @@ html
                     "transports" : ["websocket"], 
                     "reconnect": true
                 };
-                socket = io.connect("project-smash.azurewebsites.net:"+port, connectionOptions);
+                socket = io.connect("project-smash.azurewebsites.net:"+port);
                 setInterval(function(){
                     if(socket.connected){
                         document.getElementById("status").textContent = "Online";
