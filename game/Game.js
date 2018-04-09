@@ -104,6 +104,14 @@ module.exports = class Game{
     add(item){
         Matter.World.add(this.engine.world, [item]);
     }
+    areAllPlayersReady(){
+        for(let player of this.players){
+            if(!player.charecter){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 function onUpdate(game){
     let currentTime = Date.now();

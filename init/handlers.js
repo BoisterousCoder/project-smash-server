@@ -33,7 +33,7 @@ let pregame = {
     requestPublic(socket, gameId){
         gameId = Number(gameId);
         if(!games.privateGames[gameId]){
-            socket.emit("warn", "There is no public game with that id");
+            socket.emit("warn", "There is no public game with the id of "+gameId);
             return null;
         }
         let game = games.privateGames[gameId].join(socket);
@@ -70,7 +70,7 @@ let postgame = {
         charecterName = stripInvalid(charecterName);
         let playerId = game.getPlayerId(socketId);
         if(game.players[playerId].charecter){
-            socket.emit("error", "You already have a charecter")
+            socket.emit("warn", "You already have a charecter")
         }else{
             game.players[playerId].charecter = require(`../game/charecters/${charecterName}/${charecterName}.js`);
         }
