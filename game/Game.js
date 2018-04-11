@@ -88,6 +88,11 @@ module.exports = class Game{
     onInput(input, playerId){
         
     }
+    emit(title, msg){
+        this.players.map((player) => {
+            player.socket.emit(title, msg);
+        });
+    }
     onStart(){
         console.log('starting..');
         this.lastUpdateTime = Date.now();
@@ -98,6 +103,7 @@ module.exports = class Game{
 
         this.engine = Matter.Engine.create();
         console.log(this.engine);
+        game.emit("statics", JSON.stringify(game.staticPolys))
 
         setInterval(()=>onUpdate(this), updateInterval);
     }
@@ -117,6 +123,9 @@ function onUpdate(game){
     let currentTime = Date.now();
     Matter.Engine.update(game.engine, currentTime - game.lastUpdateTime);
     game.lastUpdateTime = game.currentTime;
+    game.players.map((player)=>{
+        game.emit("charecter", JSON.stringify(player.charecter))
+    })
 }
 
 function readJSON(filename){
