@@ -22,12 +22,14 @@ module.exports = function(io) {
                         }else if(!isGameRequired){
                             callback(res);
                         }else{
-                            console.warn('Person attempted to access game data of a game they weren\'t in.')
+                            console.warn('Person attempted to access game data of a game they weren\'t in.');
+                            socket.emit("warn", "You aren't in game " + gameId);
                         }
                     }else if(!isGameRequired){
                         callback(res);
                     }else{
                         console.warn('Person attempted to access game data of a game they weren\'t in.')
+                        socket.emit("warn", "You aren't in game any game");
                     }
                 }catch(err){
                     console.error(err);
