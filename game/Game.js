@@ -110,7 +110,7 @@ module.exports = class Game{
     add(item){
         Matter.World.add(this.engine.world, [item]);
     }
-    areAllPlayersReady(){
+    get allPlayersReady(){
         for(let player of this.players){
             if(!player.charecter){
                 return false;

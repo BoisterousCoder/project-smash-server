@@ -68,12 +68,16 @@ let pregame = {
 let postgame = {
     requestCharecter(socket, game, charecterName){
         charecterName = stripInvalid(charecterName);
-        let playerId = game.getPlayerId(socketId);
+        const playerId = game.getPlayerId(socketId);
         if(game.players[playerId].charecter){
             socket.emit("warn", "You already have a charecter")
         }else{
-            game.players[playerId].charecter = require(`../game/charecters/${charecterName}/${charecterName}.js`);
+            game.players[playerId].charecter = 
+                require(`../game/charecters/${charecterName}/${charecterName}.js`);
+            socket.emit("log", "You have selected the "+charecterName+" charecter successfully");
         }
+        if(game.allPlayersReady) game.onStart();
+        else socket.emit("log", "not all players are ready");
     }
 }
 class GameContainer{
