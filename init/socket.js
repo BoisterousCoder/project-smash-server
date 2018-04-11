@@ -22,13 +22,13 @@ module.exports = function(io) {
                         }else if(!isGameRequired){
                             callback(res);
                         }else{
-                            console.warn('Person attempted to access game data of a game they weren\'t in.');
+                            console.warn('A person attempted to access game data of a game they weren\'t in.');
                             socket.emit("warn", "You aren't in game " + gameId);
                         }
                     }else if(!isGameRequired){
                         callback(res);
                     }else{
-                        console.warn('Person attempted to access game data of a game they weren\'t in.')
+                        console.warn('A person attempted to access game data of a game they weren\'t in.')
                         socket.emit("warn", "You aren't in game any game");
                     }
                 }catch(err){
@@ -48,15 +48,22 @@ module.exports = function(io) {
                 return handlers.privateGames[gameId];
             }
         }
+        function setGame(game){
+            if(isPublicGame){
+                handlers.publicGames[gameId] = game;
+            }else{
+                handlers.privateGames[gameId] = game;
+            }
+        }
 
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
-                game = handlers.pregame[handler](socket, res);
+                gameId = handlers.pregame[handler](socket, res);
             }, false);
         }
         for (const handler in handlers.postgame) {
             on(handler, (res) =>{
-                game = handlers.postgame[handler](socket, game, res);
+                game = handlers.postgame[handler](socket, getGame(), res);
             }, true);
         }
         on("disconnect", () => {

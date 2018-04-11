@@ -78,6 +78,7 @@ let postgame = {
         }
         if(game.allPlayersReady) game.onStart();
         else socket.emit("log", "not all players are ready");
+        return game;
     }
 }
 class GameContainer{
