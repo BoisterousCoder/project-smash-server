@@ -43,7 +43,6 @@ module.exports = function(io) {
         }
         function getGame(){
             if(isPublicGame){
-                console.log(handlers.publicGames[gameId]);
                 return handlers.publicGames[gameId];
             }else{
                 return handlers.privateGames[gameId];
@@ -60,10 +59,7 @@ module.exports = function(io) {
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
                 let _gameId = handlers.pregame[handler](socket, res);
-                if(_gameId || gameId == 0){
-                    gameId = _gameId;
-                    socket.emit("log", "Your gameId is " + gameId);
-                }
+                if(_gameId || gameId == 0) gameId = _gameId;
             }, false);
         }
         for (const handler in handlers.postgame) {

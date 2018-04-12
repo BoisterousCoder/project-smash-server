@@ -36,7 +36,8 @@ let pregame = {
             socket.emit("warn", "There is no public game with the id of "+gameId);
             return null;
         }
-        let game = games.publicGames[gameId].join(socket);
+        let game = games.publicGames[gameId];
+        game.join(socket);
         if(game){
             socket.emit("joinSuccess", gameId);
             return gameId;
@@ -47,7 +48,8 @@ let pregame = {
     },
     requestPrivate(socket, gameId){
         if(gameId){
-            let game = games.privateGames[gameId].join(socket);
+            let game = games.privateGames[gameId];
+            game.join(socket);
             if(game){
                 socket.emit("joinSuccess", gameId);
                 return gameId;
