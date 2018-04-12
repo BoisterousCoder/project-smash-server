@@ -59,6 +59,7 @@ module.exports = function(io) {
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
                 gameId = handlers.pregame[handler](socket, res);
+                socket.emit("log", "Your gameId is " + res);
             }, false);
         }
         for (const handler in handlers.postgame) {

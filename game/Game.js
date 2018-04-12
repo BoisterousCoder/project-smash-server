@@ -56,7 +56,7 @@ module.exports = class Game{
             this.players.push({
                 socket:socket
             });
-            console.log("player has joined game")
+            console.log("player has joined game "+this.id);
             return this;
         }
     }
