@@ -70,7 +70,7 @@ let pregame = {
 let postgame = {
     requestCharecter(socket, game, charecterName){
         charecterName = stripInvalid(charecterName);
-        const playerId = game.getPlayerId(socketId);
+        const playerId = game.getPlayerId(socket.id);
         if(game.players[playerId].charecter){
             socket.emit("warn", "You already have a charecter")
         }else{
