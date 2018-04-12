@@ -58,13 +58,17 @@ module.exports = function(io) {
 
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
-                gameId = handlers.pregame[handler](socket, res);
-                socket.emit("log", "Your gameId is " + res);
+                let _gameId = handlers.pregame[handler](socket, res);
+                if(_gameId || gameId == 0){
+                    gameId = _gameId;
+                    socket.emit("log", "Your gameId is " + gameId);
+                }
             }, false);
         }
         for (const handler in handlers.postgame) {
             on(handler, (res) =>{
-                game = handlers.postgame[handler](socket, getGame(), res);
+                let _game = handlers.postgame[handler](socket, getGame(), res);
+                if(_game) setGame(_game);
             }, true);
         }
         on("disconnect", () => {
