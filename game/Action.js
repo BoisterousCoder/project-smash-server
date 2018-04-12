@@ -1,12 +1,12 @@
 class Action{
     colliderSize;
-    colliders = [];
+    colliders;
     damage;
     id;
-    isActive = false;
+    isActive;
     img;
-    __onColide = [];
-    __onUpdate = [];
+    __onColide;
+    __onUpdate;
     cast(caster){
         //To Be filled in by child
     }
@@ -35,6 +35,10 @@ class Action{
         this.combine(vect);
     }
     constructor(id){
+        this.__onUpdate = [];
+        this.__onColide = [];
+        this.isActive = false;
+        this.colliders = [];
         this.id = id;
     }
 }

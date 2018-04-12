@@ -4,24 +4,35 @@ const Point = require("../../Point");
 const Collider = require("../../Collider");
 
 class Template extends Charecter{
-    actions = [
-        new TemplateAction(0)
-    ]
-    resistance = 2;//the charecter's resistance to damage
-    speed = 1;//the movement speed of the charecter
-    name = "Template";//The name of the charecter
+    actions;
+    resistance;//the charecter's resistance to damage
+    speed;//the movement speed of the charecter
+    name;//The name of the charecter
+    constructor(socketId){
+        super(socketId);
+        this.actions = [
+            new TemplateAction(0)
+        ]
+        this.resistance =2;
+        this.speed = 1;
+        this.name="Template";
+    }
 }
 
 class TemplateAction extends Action{
-    size = 2;
-    img = "TemplateAttack.png"
-    onCollide(casterChar, collidedChar, colliderId){
-        collidedChar.multiplier += 10/collidedChar.resistance;
-        this.colliders[colliderId] = undefined;
-    }
-    cast(caster){
-        let colliderId = this.colliders.length;
-        this.colliders[colliderId] = new Collider(caster, size, colliderId, this.id);
+    size;
+    constructor(id){
+        super(id);
+        size = 2;
+        let self = this;
+        this.onCollide = function(casterChar, collidedChar, colliderId){
+            collidedChar.multiplier += 10/collidedChar.resistance;
+            self.colliders[colliderId] = undefined;
+        }
+        this.cast = function(caster){
+            let colliderId = self.colliders.length;
+            self.colliders[colliderId] = new Collider(caster, size, colliderId, self.id);
+        }
     }
 }
 module.exports = Template;

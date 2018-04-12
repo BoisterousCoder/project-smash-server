@@ -12,8 +12,8 @@ class Charecter extends Point{
     playerName;
     vel;
     speed;
-    __onMove = [];
-    __onUpdate = [];
+    __onMove;
+    __onUpdate;
     get onMove(){
         let self = this;
         return function(direction, lastTime, currentTime){
@@ -47,6 +47,8 @@ class Charecter extends Point{
 
     constructor(socketId){
         this.socketId = socketId;
+        this.__move = [];
+        this.__onMove = [];
     }
 }
 module.exports = Charecter;
