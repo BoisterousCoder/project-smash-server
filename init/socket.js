@@ -43,7 +43,7 @@ module.exports = function(io) {
         }
         function getGame(){
             if(isPublicGame){
-                socket.emit("log", handlers.publicGames[gameId]);
+                console.log(handlers.publicGames[gameId]);
                 return handlers.publicGames[gameId];
             }else{
                 return handlers.privateGames[gameId];
