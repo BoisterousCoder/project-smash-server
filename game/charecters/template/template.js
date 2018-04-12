@@ -4,23 +4,18 @@ const Point = require("../../Point");
 const Collider = require("../../Collider");
 
 class Template extends Charecter{
-    actions;
-    resistance;//the charecter's resistance to damage
-    speed;//the movement speed of the charecter
-    name;//The name of the charecter
     constructor(socketId){
         super(socketId);
         this.actions = [
             new TemplateAction(0)
         ]
-        this.resistance =2;
-        this.speed = 1;
-        this.name="Template";
+        this.resistance =2;//the charecter's resistance to damage
+        this.speed = 1;//the movement speed of the charecter
+        this.name="Template";//The name of the charecter
     }
 }
 
 class TemplateAction extends Action{
-    size;
     constructor(id){
         super(id);
         size = 2;

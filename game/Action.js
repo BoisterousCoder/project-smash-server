@@ -1,12 +1,4 @@
 class Action{
-    colliderSize;
-    colliders;
-    damage;
-    id;
-    isActive;
-    img;
-    __onColide;
-    __onUpdate;
     cast(caster){
         //To Be filled in by child
     }

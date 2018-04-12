@@ -2,18 +2,6 @@ let Action = require("./Action");
 let Point = require("./Point");
 
 class Charecter extends Point{
-    socketId;
-    isPremium;
-    name;
-    actions;
-    multiplier = 0;
-    resistance;
-    img;
-    playerName;
-    vel;
-    speed;
-    __onMove;
-    __onUpdate;
     get onMove(){
         let self = this;
         return function(direction, lastTime, currentTime){
@@ -46,6 +34,7 @@ class Charecter extends Point{
     }
 
     constructor(socketId){
+        this.multiplier = 0;
         this.socketId = socketId;
         this.__move = [];
         this.__onMove = [];
