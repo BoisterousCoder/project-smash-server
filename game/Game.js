@@ -40,6 +40,7 @@ module.exports = class Game{
         for(let i in this.players){
             if(this.players[i].socket.id == socketId) return i;
         }
+        return false;
     }
     destroyIfEmpty(){      
         if(this.players.length > 0){

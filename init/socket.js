@@ -17,7 +17,7 @@ module.exports = function(io) {
                     let game = getGame();
                     
                     if(game){
-                        if(game.isPlayerInGame(socket.id)){
+                        if(game.getPlayerId(socket.id)){
                             callback(res);
                         }else if(!isGameRequired){
                             callback(res);
