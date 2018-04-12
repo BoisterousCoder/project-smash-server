@@ -58,8 +58,9 @@ module.exports = function(io) {
 
         for (const handler in handlers.pregame) {
             on(handler, (res) =>{
-                let _gameId = handlers.pregame[handler](socket, res);
+                let _gameId, _isPublic = handlers.pregame[handler](socket, res);
                 if(_gameId || gameId == 0) gameId = _gameId;
+                if(_isPublic != undefined && _isPublic != null) isPublicGame = _isPublic;
             }, false);
         }
         for (const handler in handlers.postgame) {

@@ -40,7 +40,7 @@ let pregame = {
         game.join(socket);
         if(game){
             socket.emit("joinSuccess", gameId);
-            return gameId;
+            return gameId, true;
         }else{
             socket.emit("warn", "You can't join a full game");
             return null;
@@ -63,7 +63,7 @@ let pregame = {
         }else{
             gameId = hash(socket.id);
             games.privateGames[gameId] = new Game(gameId);
-            return gameId;
+            return gameId, false;
         }
     }
 }
