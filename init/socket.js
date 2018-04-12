@@ -42,6 +42,7 @@ module.exports = function(io) {
             on(title, callback, isGameRequired);
         }
         function getGame(){
+            socket.emit("log", "Your gameId is " + gameId);
             if(isPublicGame){
                 return handlers.publicGames[gameId];
             }else{
@@ -50,7 +51,6 @@ module.exports = function(io) {
         }
         function setGame(game){
             if(isPublicGame){
-                socket.emit("log", "Your gameId is " + gameId);
                 handlers.publicGames[gameId] = game;
             }else{
                 handlers.privateGames[gameId] = game;
