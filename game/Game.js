@@ -104,7 +104,7 @@ module.exports = class Game{
 
         this.engine = Matter.Engine.create();
         console.log(this.engine);
-        game.emit("statics", JSON.stringify(game.staticPolys))
+        this.emit("statics", JSON.stringify(this.staticPolys))
 
         setInterval(()=>onUpdate(this), updateInterval);
     }
