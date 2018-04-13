@@ -45,6 +45,13 @@ class Charecter extends Point{
         vect.deg = direction;
         this.combine(vect);
     }
+    toDisplay(){
+        return {
+            name:this.name,
+            x:this.x,
+            y:this.y
+        }
+    }
     set onUpdate(func){
         this.__onUpdate.push(func);
     }

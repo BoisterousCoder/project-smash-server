@@ -127,7 +127,7 @@ function onUpdate(game){
     Matter.Engine.update(game.engine, currentTime - game.lastUpdateTime);
     game.lastUpdateTime = game.currentTime;
     game.players.map((player)=>{
-        game.emit("charecter", player.charecter.name)
+        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()))
     })
 }
 
