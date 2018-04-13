@@ -68,7 +68,7 @@ module.exports = class Game{
         this.players.splice(this.getPlayerId(socketId), 1)
         return false;
     }
-    __genStatics(){
+    __genWorld(){
         let statics = [];
         let mapData = readJSON(this.mapFile);
         for(let staticData of mapData.statics){
@@ -97,7 +97,8 @@ module.exports = class Game{
     onStart(){
         console.log('starting..');
         this.lastUpdateTime = Date.now();
-        this.staticPolys = this.__genStatics();
+        this.lastDelta = 0;
+        this.staticPolys = this.__genWorld();
         let positions = [];
         for(let staticPoly of this.staticPolys){
             this.add(staticPoly);
@@ -123,13 +124,19 @@ module.exports = class Game{
     }
 }
 function onUpdate(game){
-    let currentTime = Date.now();
-    Matter.Engine.update(game.engine, currentTime - game.lastUpdateTime);
+    game.currentTime = Date.now();
+    game.currentDelta = game.currentTime - game.lastUpdateTime;
+
+    if(game.lastDelta == 0) Matter.Engine.update(game.engine, game.currentDelta);
+    else Matter.Engine.update(game.engine, game.currentDelta, game.currentDelta/game.lastDelta);
+
+    game.lastDelta = game.currentDelta;
     game.lastUpdateTime = game.currentTime;
-    game.players.map((player)=>{
-        //game.emit("charecter", JSON.stringify(player.charecter.toDisplay()))
-        game.emit("charecter", JSON.stringify(game.engine))
-    })
+    
+    game.emit("charecter", JSON.stringify(game.engine))
+    // game.players.map((player)=>{
+    //     game.emit("charecter", JSON.stringify(player.charecter.toDisplay()))
+    // })
 }
 
 function readJSON(filename){
