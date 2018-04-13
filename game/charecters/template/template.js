@@ -5,6 +5,8 @@ const Collider = require("../../Collider");
 
 class Template extends Charecter{
     constructor(socketId){
+        this.width = 0.5;
+        this.height = 2;
         super(socketId);
         this.actions = [
             new TemplateAction(0)

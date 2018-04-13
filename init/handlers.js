@@ -74,8 +74,8 @@ let postgame = {
         if(game.players[playerId].charecter){
             socket.emit("warn", "You already have a charecter")
         }else{
-            game.players[playerId].charecter = 
-                require(`../game/charecters/${charecterName}/${charecterName}.js`);
+            let charClass = require(`../game/charecters/${charecterName}/${charecterName}.js`)
+            game.players[playerId].charecter = new charClass(game);
             socket.emit("log", "You have selected the "+charecterName+" charecter successfully");
         }
         if(game.allPlayersReady) game.onStart();

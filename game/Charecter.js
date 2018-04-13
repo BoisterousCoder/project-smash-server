@@ -1,7 +1,14 @@
 let Action = require("./Action");
 let Point = require("./Point");
+const Matter = require("matter-js");
 
 class Charecter extends Point{
+    constructor(game){
+        this.multiplier = 0;
+        this.__onMove = [];
+        this.matter = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height);
+        game.add(this.matter);
+    }
     get onMove(){
         let self = this;
         return function(direction, lastTime, currentTime){
@@ -27,17 +34,10 @@ class Charecter extends Point{
         let vect = new Point();
         vect.r = distance;
         vect.deg = direction;
-        self.combine(vect);
+        this.combine(vect);
     }
     set onUpdate(func){
         this.__onUpdate.push(func);
-    }
-
-    constructor(socketId){
-        this.multiplier = 0;
-        this.socketId = socketId;
-        this.__move = [];
-        this.__onMove = [];
     }
 }
 module.exports = Charecter;
