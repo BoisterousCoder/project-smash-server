@@ -3,8 +3,8 @@ let Point = require("./Point");
 const Matter = require("matter-js");
 
 class Charecter extends Point{
-    constructor(game, width, height){
-        super();
+    constructor(game, x, y, width, height){
+        super(x, y);
         this.__width = width;
         this.__height = height
         this.multiplier = 0;
