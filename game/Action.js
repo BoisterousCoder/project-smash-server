@@ -18,7 +18,9 @@ class Action{
             }
         }
     }
-    set onUpdate(lastTime, currentTime)
+    set onUpdate(func){
+        this.__onUpdate.push(func);
+    }
     translate(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;
         let vect = new Point();
