@@ -21,6 +21,9 @@ class Action{
     set onUpdate(func){
         this.__onUpdate.push(func);
     }
+    set onCollide(func){
+        this.__onCollide.push(func);
+    }
     translate(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;
         let vect = new Point();
@@ -30,7 +33,7 @@ class Action{
     }
     constructor(id){
         this.__onUpdate = [];
-        this.__onColide = [];
+        this.__onCollide = [];
         this.isActive = false;
         this.colliders = [];
         this.id = id;
