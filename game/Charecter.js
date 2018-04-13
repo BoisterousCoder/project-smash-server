@@ -19,7 +19,7 @@ class Charecter extends Point{
         this.matter.position.x = x;
     }
     get y(){
-        return this.matter.position.y
+        return this.matter.position.y;
     }
     set y(y){
         this.matter.position.y = y;
