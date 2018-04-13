@@ -4,6 +4,7 @@ const Matter = require("matter-js");
 
 class Charecter extends Point{
     constructor(game, width, height){
+        super();
         this.__width = width;
         this.__height = height
         this.multiplier = 0;
