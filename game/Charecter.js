@@ -3,11 +3,19 @@ let Point = require("./Point");
 const Matter = require("matter-js");
 
 class Charecter extends Point{
-    constructor(game){
+    constructor(game, width, height){
+        this.__width = width;
+        this.__height = height
         this.multiplier = 0;
         this.__onMove = [];
         this.matter = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height);
         game.add(this.matter);
+    }
+    get width(){
+        return this.__width;
+    }
+    get height(){
+        return this.__height;
     }
     get onMove(){
         let self = this;

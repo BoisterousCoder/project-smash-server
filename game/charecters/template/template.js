@@ -4,10 +4,10 @@ const Point = require("../../Point");
 const Collider = require("../../Collider");
 
 class Template extends Charecter{
-    constructor(socketId){
-        this.width = 0.5;
-        this.height = 2;
-        super(socketId);
+    constructor(game){
+        let width = 0.5;
+        let height = 2;
+        super(game, width, height);
         this.actions = [
             new TemplateAction(0)
         ]
