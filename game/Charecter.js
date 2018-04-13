@@ -9,7 +9,7 @@ class Charecter extends Point{
         this.__height = height
         this.multiplier = 0;
         this.__onMove = [];
-        this.matter = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height);
+        this.matter = Matter.Bodies.rectangle(this.__x, this.__y, this.width, this.height);
         game.add(this.matter);
     }
     get x(){
