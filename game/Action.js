@@ -1,4 +1,11 @@
 class Action{
+    constructor(id){
+        this.__onUpdate = [];
+        this.__onCollide = [];
+        this.isActive = false;
+        this.colliders = [];
+        this.id = id;
+    }
     cast(caster){
         //To Be filled in by child
     }
@@ -30,13 +37,6 @@ class Action{
         vect.r = distance;
         vect.deg = direction;
         this.combine(vect);
-    }
-    constructor(id){
-        this.__onUpdate = [];
-        this.__onCollide = [];
-        this.isActive = false;
-        this.colliders = [];
-        this.id = id;
     }
 }
 module.exports = Action;

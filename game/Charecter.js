@@ -12,6 +12,18 @@ class Charecter extends Point{
         this.matter = Matter.Bodies.rectangle(this.x, this.y, this.width, this.height);
         game.add(this.matter);
     }
+    get x(){
+        return this.matter.position.x;
+    }
+    set x(x){
+        this.matter.position.x = x;
+    }
+    get y(){
+        return this.matter.position.y
+    }
+    set y(y){
+        this.matter.position.y = y;
+    }
     get width(){
         return this.__width;
     }
