@@ -100,13 +100,14 @@ module.exports = class Game{
         this.lastDelta = 0;
         this.staticPolys = this.__genWorld();
         let positions = [];
+        this.engine = Matter.Engine.create();
+        
         for(let staticPoly of this.staticPolys){
             this.add(staticPoly);
             positions.push(staticPoly.position);
         }
         this.emit("statics", JSON.stringify(positions));
 
-        this.engine = Matter.Engine.create();
         console.log(this.engine);
 
         setInterval(()=>onUpdate(this), updateInterval);
