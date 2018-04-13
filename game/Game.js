@@ -18,7 +18,7 @@ module.exports = class Game{
         this.players=[];
         this.charecters=[];
         this.owner={};
-        this.mapFile = "./game/maps/map.json";
+        this.mapFile = "../game/maps/map.json";
         this.id=id;
 
         // this.reset = reset;
