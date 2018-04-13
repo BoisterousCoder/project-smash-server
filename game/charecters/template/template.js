@@ -20,7 +20,7 @@ class Template extends Charecter{
 class TemplateAction extends Action{
     constructor(id){
         super(id);
-        size = 2;
+        this.size = 2;
         let self = this;
         this.onCollide = function(casterChar, collidedChar, colliderId){
             collidedChar.multiplier += 10/collidedChar.resistance;
