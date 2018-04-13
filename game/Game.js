@@ -101,7 +101,7 @@ module.exports = class Game{
         this.staticPolys = this.__genWorld();
         let positions = [];
         this.engine = Matter.Engine.create();
-        
+
         for(let staticPoly of this.staticPolys){
             this.add(staticPoly);
             positions.push(staticPoly.position);
@@ -134,10 +134,9 @@ function onUpdate(game){
     game.lastDelta = game.currentDelta;
     game.lastUpdateTime = game.currentTime;
     
-    game.emit("charecter", JSON.stringify(game.engine))
-    // game.players.map((player)=>{
-    //     game.emit("charecter", JSON.stringify(player.charecter.toDisplay()))
-    // })
+    game.players.map((player)=>{
+        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()))
+    })
 }
 
 function readJSON(filename){
