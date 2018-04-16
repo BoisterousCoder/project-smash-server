@@ -111,6 +111,7 @@ module.exports = class Game{
         console.log(this.engine);
 
         setInterval(()=>onUpdate(this), updateInterval);
+        this.emit("start");
     }
     add(item){
         Matter.World.add(this.engine.world, [item]);
