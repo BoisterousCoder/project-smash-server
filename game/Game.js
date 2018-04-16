@@ -96,11 +96,11 @@ module.exports = class Game{
     }
     onStart(){
         console.log('starting..');
-        this.lastUpdateTime = Date.now();
-        this.lastDelta = 0;
         this.staticPolys = this.__genWorld();
         let positions = [];
         this.engine = Matter.Engine.create();
+        this.runner = Matter.Runner.create();
+        this.delta;
 
         for(let staticPoly of this.staticPolys){
             this.add(staticPoly);
@@ -126,14 +126,14 @@ module.exports = class Game{
     }
 }
 function onUpdate(game){
-    game.currentTime = Date.now();
-    game.currentDelta = game.currentTime - game.lastUpdateTime;
+    Matter.Runner.tick(game.runner, game.engine, Date.now())
+    //game.currentDelta = game.currentTime - game.lastUpdateTime;
 
-    if(game.lastDelta == 0) Matter.Engine.update(game.engine, game.currentDelta);
-    else Matter.Engine.update(game.engine, game.currentDelta, game.currentDelta/game.lastDelta);
+    //if(game.lastDelta == 0) Matter.Engine.update(game.engine, game.currentDelta);
+    //else Matter.Engine.update(game.engine, game.currentDelta, game.currentDelta/game.lastDelta);
 
-    game.lastDelta = game.currentDelta;
-    game.lastUpdateTime = game.currentTime;
+    //game.lastDelta = game.currentDelta;
+    //game.lastUpdateTime = game.currentTime;
     
     game.players.map((player)=>{
         game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));

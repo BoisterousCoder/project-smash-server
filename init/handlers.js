@@ -85,7 +85,6 @@ let postgame = {
     },
     move(socket, game, direction){
         let id = game.getPlayerId(socket.id);
-        //console.log("player with id "+id+" is attempting to move their charecter")
         let charecter = game.players[id].charecter;
         let force = new Point();
         force.r = charecter.speed;
