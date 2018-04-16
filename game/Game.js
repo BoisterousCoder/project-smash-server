@@ -13,7 +13,7 @@ const updateInterval = 10;
 module.exports = class Game{
     constructor(id, maxPlayers = 4){
         // id, io, reset, maxPlayers
-        this.init(id, maxPlayers);
+        let suncForcer =  this.init(id, maxPlayers);
     }
     init(id, maxPlayers){
         this.grav = new Point(0, 0.1);
@@ -31,6 +31,7 @@ module.exports = class Game{
             y:0
         }
         this.__mapSize = 800;
+        return true;
     }
     reset(){
         if(this.loop)clearInterval(this.loop);
