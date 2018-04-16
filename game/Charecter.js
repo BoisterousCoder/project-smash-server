@@ -17,10 +17,8 @@ class Charecter extends Point{
     }
     set x(x){
         let point = new Point(x, this.y);
-        console.log(self.matter);
         Matter.Body.setPosition(this.matter, point.vect);
         let self = this;
-        setTimeout(()=>console.log(self.matter), 3000);
     }
     get y(){
         return this.matter.position.y;
@@ -36,8 +34,9 @@ class Charecter extends Point{
         return this.__height;
     }
     applyForce(force){
-        //this.onMove();
+        console.log(self.matter);
         Matter.Body.applyForce(this.matter, this.vect, force);
+        setTimeout(()=>console.log(self.matter), 3000);
     }
     get onMove(){
         let self = this;
