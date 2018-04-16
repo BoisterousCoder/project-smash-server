@@ -128,6 +128,7 @@ module.exports = class Game{
 }
 function onUpdate(game){
     //Matter.Runner.tick(game.runner, game.engine, Date.now())
+    game.currentTime = Date.now();
     game.currentDelta = game.currentTime - game.lastUpdateTime;
 
     if(game.lastDelta == 0) Matter.Engine.update(game.engine, game.currentDelta);
@@ -135,6 +136,8 @@ function onUpdate(game){
 
     game.lastDelta = game.currentDelta;
     game.lastUpdateTime = game.currentTime;
+
+    console.log("game update at "+ game.currentTime);
     
     game.players.map((player)=>{
         game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
