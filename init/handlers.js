@@ -2,6 +2,7 @@ const publicGames = 5;
 
 const crypto = require('crypto');
 const Game = require("../game/Game");
+const Point = require("../game/Point");
 
 function hash(input){
     return crypto.createHash('md5').update(input).digest('hex');
