@@ -88,7 +88,7 @@ let postgame = {
         let force = new Point();
         force.r = charecter.speed;
         force.deg = Number(direction);
-        Matter.Body.applyForce(charecter, charecter.vect, force);
+        charecter.applyForce(force);
     }
 }
 class GameContainer{

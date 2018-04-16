@@ -32,6 +32,10 @@ class Charecter extends Point{
     get height(){
         return this.__height;
     }
+    applyForce(force){
+        this.onMove();
+        Matter.Body.applyForce(this.matter, this.vect, force);
+    }
     get onMove(){
         let self = this;
         return function(direction, lastTime, currentTime){
