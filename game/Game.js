@@ -13,21 +13,7 @@ const updateInterval = 10;
 module.exports = class Game{
     constructor(id, maxPlayers = 4){
         // id, io, reset, maxPlayers
-        this.grav = new Point(0, 0.1);
-        this.staticPolys = [];
-        this.players=[];
-        this.charecters=[];
-        this.owner={};
-        this.mapFile = "../game/maps/map.json";
-        this.id=id;
-
-        this.maxPlayers = maxPlayers;
-
-        this.__mapOffSet = {
-            x:0,
-            y:0
-        }
-        this.__mapSize = 800;
+        this.init(id, maxPlayers);
     }
     init(id, maxPlayers){
         this.grav = new Point(0, 0.1);
@@ -44,8 +30,8 @@ module.exports = class Game{
             x:0,
             y:0
         }
+        this.engine = Matter.Engine.create();
         this.__mapSize = 800;
-        return true;
     }
     reset(){
         if(this.loop)clearInterval(this.loop);
@@ -106,7 +92,6 @@ module.exports = class Game{
         console.log('starting..');
         this.staticPolys = this.__genWorld();
         let positions = [];
-        this.engine = Matter.Engine.create();
         //this.runner = Matter.Runner.create();
         this.lastUpdateTime = Date.now();
         this.lastDelta = 0;
