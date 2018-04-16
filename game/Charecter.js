@@ -33,7 +33,7 @@ class Charecter extends Point{
         return this.__height;
     }
     applyForce(force){
-        this.onMove();
+        //this.onMove();
         Matter.Body.applyForce(this.matter, this.vect, force);
     }
     get onMove(){
