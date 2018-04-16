@@ -5,7 +5,7 @@
 const Matter = require("matter-js");
 
  class Point{
-    constructor(x = 0, y = 0) {
+    constructor(x = 1, y = 1) {
         this.__x = x;
         this.__y = y;
     }

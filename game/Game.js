@@ -35,7 +35,6 @@ module.exports = class Game{
     }
     reset(){
         if(this.loop)clearInterval(this.loop);
-        this.engine = undefined;
         init(this.id, this.maxPlayers);
     }
     getPlayerId(socketId){
