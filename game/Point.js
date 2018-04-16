@@ -59,13 +59,13 @@ const Matter = require("matter-js");
         this.__x = x
     }
     get x(){
-        return __x;
+        return this.__x;
     }
     set y(y){
         this._y = y;
     }
     get y(){
-        this.__y;
+        return this.__y;
     }
     get vect(){
         return Matter.Vector.create(this.x, this.y);
