@@ -12,7 +12,7 @@ class Template extends Charecter{
             new TemplateAction(0)
         ]
         this.resistance =2;//the charecter's resistance to damage
-        this.speed = 1;//the movement speed of the charecter
+        this.speed = 0.1;//the movement speed of the charecter
         this.name="Template";//The name of the charecter
     }
 }
