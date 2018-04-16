@@ -135,7 +135,8 @@ function onUpdate(game){
     game.lastUpdateTime = game.currentTime;
     
     game.players.map((player)=>{
-        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()))
+        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
+        player.charecter.onUpdate();
     })
 }
 

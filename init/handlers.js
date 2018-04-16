@@ -81,6 +81,14 @@ let postgame = {
         if(game.allPlayersReady) game.onStart();
         else socket.emit("log", "not all players are ready");
         return game;
+    },
+    move(socket, game, direction){
+        let id = game.getPlayerId(socket);
+        let charecter = game.players[id].charecter;
+        let force = new Point();
+        force.r = charecter.speed;
+        force.deg = Number(direction);
+        Matter.Body.applyForce(charecter, charecter.vect, force);
     }
 }
 class GameContainer{

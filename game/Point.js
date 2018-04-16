@@ -13,37 +13,33 @@ const Matter = require("matter-js");
         return this.subtract(otherPoint).abs();
     }
     subtract(otherPoint) {
-        return new Point(this.__x - otherPoint.x, this.__y - otherPoint.y);
+        return new Point(this.x - otherPoint.x, this.y - otherPoint.y);
     }
     combine(otherPoint){
-        return new Point(this.__x + otherPoint.x, this.__y + otherPoint.y);
+        return new Point(this.x + otherPoint.x, this.y + otherPoint.y);
     }
     roundUp(scale=1){
-        return new Point(Math.ceil(this.__x/scale)*scale, Math.ceil(this.__y/scale)*scale);
+        return new Point(Math.ceil(this.x/scale)*scale, Math.ceil(this.y/scale)*scale);
     }
     roundDown(scale=1){
-        return new Point(Math.floor(this.__x/scale)*scale, Math.floor(this.__y/scale)*scale);
+        return new Point(Math.floor(this.x/scale)*scale, Math.floor(this.y/scale)*scale);
     }
     round(scale=1){
-        return new Point(Math.round(this.__x/scale)*scale, Math.round(this.__y/scale)*scale);
+        return new Point(Math.round(this.x/scale)*scale, Math.round(this.y/scale)*scale);
     }
     abs(){
-        return new Point(Math.abs(this.__x), Math.abs(this.__y));
+        return new Point(Math.abs(this.x), Math.abs(this.y));
     }
     scale(scalar) {
-        this.__x *= scalar;
-        this.__y *= scalar;
+        this.x *= scalar;
+        this.y *= scalar;
         return this;
     }
     isAtLocation(x, y){
-        if(x==this.__x&&y==this.__y){
-            return true;
-        }else{
-            return false;
-        }
+        return (x==this.x&&y==this.y);
     }
     isAt(point){
-        if(point.x==this.__x&&point.y==this.__y){
+        if(point.x==this.x&&point.y==this.y){
             return true;
         }else{
             return false;
@@ -51,8 +47,8 @@ const Matter = require("matter-js");
     }
     isInBounds(boundsStart, boundsEnd){
         if(
-            this.__x > boundsStart.x && this.__y > boundsStart.y &&
-            this.__x < boundsEnd.x && this.__y < boundsEnd.y
+            this.x > boundsStart.x && this.y > boundsStart.y &&
+            this.x < boundsEnd.x && this.y < boundsEnd.y
         ){
             return true;
         }else{
@@ -72,22 +68,22 @@ const Matter = require("matter-js");
         this.__y;
     }
     get vect(){
-        return Matter.Vector.create(this.__x, this.__y);
+        return Matter.Vector.create(this.x, this.y);
     }
     get rad() {
-        return Math.atan2(this.__y, this.__x)
+        return Math.atan2(this.y, this.x)
     }
     get deg() {
         return (this.rad * 180) / Math.PI
     }
     get r() {
-        return Math.sqrt(Math.pow(this.__x, 2) + Math.pow(this.__y, 2))
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2))
     }
     set rad(rad) {
         let x = this.r * Math.cos(rad)
         let y = this.r * Math.sin(rad)
-        this.__x = x
-        this.__y = y
+        this.x = x
+        this.y = y
     }
     set deg(deg) {
         let rad = (Math.PI * deg) / 180
@@ -96,8 +92,8 @@ const Matter = require("matter-js");
     set r(r) {
         let x = r * Math.cos(this.rad)
         let y = r * Math.sin(this.rad)
-        this.__x = x
-        this.__y = y
+        this.x = x
+        this.y = y
     }
 }
 module.exports = Point;

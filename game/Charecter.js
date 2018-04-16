@@ -16,13 +16,15 @@ class Charecter extends Point{
         return this.matter.position.x;
     }
     set x(x){
-        this.matter.position.x = x;
+        let point = new Point(x, this.y);
+        Matter.Body.setPosition(this.matter, point.vect);
     }
     get y(){
         return this.matter.position.y;
     }
     set y(y){
-        this.matter.position.y = y;
+        let point = new Point(this.x, y);
+        Matter.Body.setPosition(this.matter, point.vect);
     }
     get width(){
         return this.__width;
