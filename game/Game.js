@@ -13,7 +13,21 @@ const updateInterval = 10;
 module.exports = class Game{
     constructor(id, maxPlayers = 4){
         // id, io, reset, maxPlayers
-        let suncForcer =  this.init(id, maxPlayers);
+        this.grav = new Point(0, 0.1);
+        this.staticPolys = [];
+        this.players=[];
+        this.charecters=[];
+        this.owner={};
+        this.mapFile = "../game/maps/map.json";
+        this.id=id;
+
+        this.maxPlayers = maxPlayers;
+
+        this.__mapOffSet = {
+            x:0,
+            y:0
+        }
+        this.__mapSize = 800;
     }
     init(id, maxPlayers){
         this.grav = new Point(0, 0.1);
