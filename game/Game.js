@@ -13,6 +13,9 @@ const updateInterval = 10;
 module.exports = class Game{
     constructor(id, maxPlayers = 4){
         // id, io, reset, maxPlayers
+        this.init(id, maxPlayers);
+    }
+    init(id, maxPlayers){
         this.grav = new Point(0, 0.1);
         this.staticPolys = [];
         this.players=[];
@@ -21,10 +24,7 @@ module.exports = class Game{
         this.mapFile = "../game/maps/map.json";
         this.id=id;
 
-        // this.reset = reset;
-        this._destroyFunc = false;
         this.maxPlayers = maxPlayers;
-        this.engine = Matter.Engine.create();
 
         this.__mapOffSet = {
             x:0,
@@ -32,23 +32,16 @@ module.exports = class Game{
         }
         this.__mapSize = 800;
     }
-    set destroyFunc(func){
-        this._destroyFunc = func;
-        setTimeout(this.destroyIfEmpty(), EMPTINESS_UPDATE_DELAY);
+    reset(){
+        if(this.loop)clearInterval(this.loop);
+        this.engine = undefined;
+        init(this.id, this.maxPlayers);
     }
     getPlayerId(socketId){
         for(let i in this.players){
             if(this.players[i].socket.id == socketId) return i;
         }
         return false;
-    }
-    destroyIfEmpty(){      
-        if(this.players.length > 0){
-            console.log('Private game ' + this.name + ' will not be destroyed for now, as there are still players inside');
-            setTimeout(this.destroyIfEmpty(), EMPTINESS_UPDATE_DELAY);
-        }else{
-            this._destroyFunc(this.id);
-        }
     }
     join(socket){
         if(this.players.length >= this.maxPlayers){
@@ -111,7 +104,7 @@ module.exports = class Game{
 
         console.log(this.engine);
 
-        setInterval(()=>onUpdate(this), updateInterval);
+        this.loop = setInterval(()=>onUpdate(this), updateInterval);
         this.emit("start");
     }
     add(item){
@@ -143,6 +136,11 @@ function onUpdate(game){
         game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
         player.charecter.onUpdate();
     })
+
+    if(game.players.length < 1){
+        game.reset();
+        console.log("The game is empty. Doing a reset...")
+    }
 }
 
 function readJSON(filename){
