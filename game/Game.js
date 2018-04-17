@@ -32,6 +32,9 @@ module.exports = class Game{
         }
         this.engine = Matter.Engine.create();
         this.__mapSize = 800;
+        
+        Matter.Composite.add(this.engine.world, 
+            Matter.Bodies.rectangle(-1*this.__mapSize, -1*this.__mapSize, this.__mapSize, this.__mapSize))
     }
     reset(){
         if(this.loop)clearInterval(this.loop);
