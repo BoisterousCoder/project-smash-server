@@ -8,7 +8,6 @@ class Charecter extends Point{
         this.__width = width;
         this.__height = height
         this.multiplier = 0;
-        this.__onMove = [];
         this.matter = Matter.Bodies.rectangle(this.__x, this.__y, this.width, this.height);
         this.matter.mass = 100;
         this.matter.inverseMass = 1/this.matter.mass;
@@ -41,25 +40,8 @@ class Charecter extends Point{
         let self = this;
         //setTimeout(()=>console.log(self.matter), 3000);
     }
-    get onMove(){
-        let self = this;
-        return function(direction, lastTime, currentTime){
-            __move(direction, lastTime, currentTime)
-            for(let func in self.__onMove){
-                func(direction, lastTime, currentTime);
-            }
-        }
-    }
-    set onMove(func){
-        this.__onMove.push(func);
-    }
-    get onUpdate(){
-        let self = this;
-        return function(game, lastTime, currentTime){
-            for(let func in self.__onUpdate){
-                func(lastTime, currentTime);
-            }
-        }
+    onUpdate(){
+        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
     }
     __move(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;
@@ -69,8 +51,16 @@ class Charecter extends Point{
         this.combine(vect);
     }
     toDisplay(){
+        let verts = [];
+        for(let vert of this.matter.vertices){
+            verts.push({
+                x:vert.x,
+                y:vert.y
+            })
+        }
         return {
             name:this.name,
+            verts:verts,
             x:this.x,
             y:this.y
         }

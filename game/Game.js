@@ -93,16 +93,19 @@ module.exports = class Game{
     onStart(){
         console.log('starting..');
         this.staticPolys = this.__genWorld();
-        let positions = [];
+        let staticData = [];
         //this.runner = Matter.Runner.create();
         this.lastUpdateTime = Date.now();
         this.lastDelta = 0;
 
         for(let staticPoly of this.staticPolys){
             this.add(staticPoly);
-            positions.push(staticPoly.position);
+            let verts = [];
+            for(let vert of staticPoly.vertices){
+                staticData.push({x:vert.x, y:vert.y});
+            }
         }
-        this.emit("statics", JSON.stringify(positions));
+        this.emit("statics", JSON.stringify(staticData));
 
         console.log(this.engine);
 
@@ -135,7 +138,6 @@ function onUpdate(game){
     console.log("game update at "+ game.currentTime);
     
     game.players.map((player)=>{
-        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
         player.charecter.onUpdate();
     })
 
