@@ -137,9 +137,9 @@ function onUpdate(game){
 
     console.log("game update at "+ game.currentTime);
     
-    game.players.map((player)=>{
+    for(let player of game.players){
         this.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
-    })
+    }
 
     if(game.players.length < 1){
         game.reset();
