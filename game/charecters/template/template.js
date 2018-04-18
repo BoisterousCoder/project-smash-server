@@ -7,7 +7,7 @@ class Template extends Charecter{
     constructor(game){
         let width = 0.5;
         let height = 2;
-        super(game, 200, 100, width, height);
+        super(game, 0, 100, width, height);
         this.actions = [
             new TemplateAction(0)
         ]
