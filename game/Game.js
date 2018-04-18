@@ -16,7 +16,7 @@ module.exports = class Game{
         this.init(id, maxPlayers);
     }
     init(id, maxPlayers){
-        this.grav = new Point(0, 0.1);
+        this.grav = new Point(0, 1);
         this.staticPolys = [];
         this.players=[];
         this.charecters=[];
