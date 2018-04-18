@@ -58,11 +58,15 @@ module.exports = class Game{
         }
     }
     leave(socketId){
-        if(this.players.length <= this.maxPlayers){
-            return false;
-        }
+        // if(this.players.length <= this.maxPlayers){
+        //     return false;
+        // }
         this.players.splice(this.getPlayerId(socketId), 1)
-        return false;
+        if(game.players.length < 1){
+            game.reset();
+            console.log("The game is empty. Doing a reset...")
+        }
+        return true;
     }
     __genWorld(){
         let statics = [];
@@ -139,11 +143,6 @@ function onUpdate(game){
     
     for(let player of game.players){
         game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
-    }
-
-    if(game.players.length < 1){
-        game.reset();
-        console.log("The game is empty. Doing a reset...")
     }
 }
 
