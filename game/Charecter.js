@@ -40,9 +40,6 @@ class Charecter extends Point{
         let self = this;
         //setTimeout(()=>console.log(self.matter), 3000);
     }
-    onUpdate(){
-        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
-    }
     __move(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;
         let vect = new Point();
