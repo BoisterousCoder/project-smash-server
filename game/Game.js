@@ -94,7 +94,6 @@ module.exports = class Game{
         console.log('starting..');
         this.staticPolys = this.__genWorld();
         let staticData = [];
-        //this.runner = Matter.Runner.create();
         this.lastUpdateTime = Date.now();
         this.lastDelta = 0;
 
@@ -136,7 +135,7 @@ function onUpdate(game){
     game.lastDelta = game.currentDelta;
     game.lastUpdateTime = game.currentTime;
 
-    console.log("game update at "+ game.currentTime);
+    //console.log("game update at "+ game.currentTime);
     
     for(let player of game.players){
         game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
