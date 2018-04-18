@@ -102,8 +102,9 @@ module.exports = class Game{
             this.add(staticPoly);
             let verts = [];
             for(let vert of staticPoly.vertices){
-                staticData.push({x:vert.x, y:vert.y});
+                verts.push({x:vert.x, y:vert.y});
             }
+            staticData.push(verts);
         }
         this.emit("statics", JSON.stringify(staticData));
 
