@@ -29,6 +29,7 @@ let pregame = {
                 id:game.id
             });
         });
+        console.log(JSON.stringify(gameListings));
         socket.emit("gameListings", JSON.stringify(gameListings));
         return null;
     },
