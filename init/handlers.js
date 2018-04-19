@@ -24,7 +24,7 @@ let pregame = {
         games.publicGames.map(game => {
             gameListings.push({
                 name:"Game "+game.id,
-                players:game.players,
+                players:game.players.length,
                 maxPlayers:game.maxPlayers,
                 id:game.id
             });
