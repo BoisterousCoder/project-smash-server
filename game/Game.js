@@ -80,8 +80,7 @@ module.exports = class Game{
                 staticData.x+this.__mapOffSet.x, 
                 staticData.y+this.__mapOffSet.y, 
                 staticData.width, 
-                staticData.height, 
-                { isStatic: true }
+                staticData.height
             );
             statics.push(staticPoly);
         }
@@ -104,6 +103,7 @@ module.exports = class Game{
 
         for(let staticPoly of this.staticPolys){
             this.add(staticPoly);
+            Matter.Body.setStatic(staticPoly, true);
             let verts = [];
             for(let vert of staticPoly.vertices){
                 verts.push({x:vert.x, y:vert.y});
