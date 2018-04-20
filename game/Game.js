@@ -74,7 +74,7 @@ module.exports = class Game{
         for(let staticData of mapData.statics){
             // for(let parameter in staticData){
             //     staticData[parameter] /= 100;
-                // staticData[parameter] *= this.__mapSize;
+            //     staticData[parameter] *= this.__mapSize;
             // }
             let staticPoly = Matter.Bodies.rectangle(
                 staticData.x+this.__mapOffSet.x, 
@@ -142,7 +142,7 @@ function onUpdate(game){
     //console.log("game update at "+ game.currentTime);
     
     for(let player of game.players){
-        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
+        player.charecter.onUpdate(game);
     }
 }
 

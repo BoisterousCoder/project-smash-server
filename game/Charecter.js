@@ -34,11 +34,12 @@ class Charecter extends Point{
     get height(){
         return this.__height;
     }
+    onUpdate(game){
+        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
+    }
     applyForce(force){
-        //console.log(this.matter);
         Matter.Body.applyForce(this.matter, this.vect, force);
         let self = this;
-        //setTimeout(()=>console.log(self.matter), 3000);
     }
     __move(direction, lastTime, currentTime){
         let distance = (currentTime - lastTime) * speed;
@@ -61,9 +62,6 @@ class Charecter extends Point{
             x:this.x,
             y:this.y
         }
-    }
-    set onUpdate(func){
-        this.__onUpdate.push(func);
     }
 }
 module.exports = Charecter;
