@@ -72,14 +72,15 @@ module.exports = class Game{
         let statics = [];
         let mapData = readJSON(this.mapFile);
         for(let staticData of mapData.statics){
-            for(let parameter in staticData){
-                staticData[parameter] /= 100;
-            }
+            // for(let parameter in staticData){
+            //     staticData[parameter] /= 100;
+                // staticData[parameter] *= this.__mapSize;
+            // }
             let staticPoly = Matter.Bodies.rectangle(
-                staticData.x*this.__mapSize+this.__mapOffSet.x, 
-                staticData.y*this.__mapSize+this.__mapOffSet.y, 
-                staticData.width*this.__mapSize, 
-                staticData.height*this.__mapSize, 
+                staticData.x+this.__mapOffSet.x, 
+                staticData.y+this.__mapOffSet.y, 
+                staticData.width, 
+                staticData.height, 
                 { isStatic: true }
             );
             statics.push(staticPoly);
