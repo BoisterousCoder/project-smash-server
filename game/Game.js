@@ -32,9 +32,6 @@ module.exports = class Game{
         }
         this.engine = Matter.Engine.create();
         this.__mapSize = 100;
-        
-        Matter.Composite.add(this.engine.world, 
-            Matter.Bodies.rectangle(-1*this.__mapSize, -1*this.__mapSize, this.__mapSize, this.__mapSize))
     }
     reset(){
         if(this.loop)clearInterval(this.loop);
@@ -72,10 +69,10 @@ module.exports = class Game{
         let statics = [];
         let mapData = readJSON(this.mapFile);
         for(let staticData of mapData.statics){
-            // for(let parameter in staticData){
-            //     staticData[parameter] /= 100;
-            //     staticData[parameter] *= this.__mapSize;
-            // }
+            for(let parameter in staticData){
+                staticData[parameter] /= 100;
+                staticData[parameter] *= this.__mapSize;
+            }
             let staticPoly = Matter.Bodies.rectangle(
                 staticData.x+this.__mapOffSet.x, 
                 staticData.y+this.__mapOffSet.y, 
@@ -139,7 +136,7 @@ function onUpdate(game){
     game.lastDelta = game.currentDelta;
     game.lastUpdateTime = game.currentTime;
 
-    //console.log("game update at "+ game.currentTime);
+    console.log("game update at "+ game.currentTime);
     
     for(let player of game.players){
         if(player) player.charecter.onUpdate(game);
