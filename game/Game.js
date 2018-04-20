@@ -31,7 +31,7 @@ module.exports = class Game{
             y:0
         }
         this.engine = Matter.Engine.create();
-        this.__mapSize = 800;
+        this.__mapSize = 100;
         
         Matter.Composite.add(this.engine.world, 
             Matter.Bodies.rectangle(-1*this.__mapSize, -1*this.__mapSize, this.__mapSize, this.__mapSize))
@@ -129,7 +129,6 @@ module.exports = class Game{
     }
 }
 function onUpdate(game){
-    //Matter.Runner.tick(game.runner, game.engine, Date.now())
     game.currentTime = Date.now();
     game.currentDelta = game.currentTime - game.lastUpdateTime;
 
