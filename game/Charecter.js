@@ -9,8 +9,6 @@ class Charecter extends Point{
         this.__height = height
         this.multiplier = 0;
         this.matter = Matter.Bodies.rectangle(this.__x, this.__y, this.width, this.height);
-        //this.matter.mass = 10;
-        //this.matter.inverseMass = 1/this.matter.mass;
         game.add(this.matter);
     }
     get x(){

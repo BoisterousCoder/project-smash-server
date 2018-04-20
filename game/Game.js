@@ -59,6 +59,7 @@ module.exports = class Game{
         //     return false;
         // }
         this.players.splice(this.getPlayerId(socketId), 1)
+        console.log("there are now only " + game.players.length +" left in a game");
         if(game.players.length < 1){
             game.reset();
             console.log("The game is empty. Doing a reset...")
