@@ -142,7 +142,7 @@ function onUpdate(game){
     //console.log("game update at "+ game.currentTime);
     
     for(let player of game.players){
-        player.charecter.onUpdate(game);
+        if(player) player.charecter.onUpdate(game);
     }
 }
 
