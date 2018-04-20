@@ -35,7 +35,7 @@ class Charecter extends Point{
         return this.__height;
     }
     onUpdate(game){
-        game.emit("charecter", JSON.stringify(player.charecter.toDisplay()));
+        game.emit("charecter", JSON.stringify(this.toDisplay()));
     }
     applyForce(force){
         Matter.Body.applyForce(this.matter, this.vect, force);
